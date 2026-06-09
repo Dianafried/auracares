@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Share Treatment Protocol</title>
+    <meta property="og:title" content="Aura Herbs — Share Treatment Protocol" />
+    <meta property="og:description" content="Explore our curated treatment protocol with visual guide and patient testimonials." />
+    <meta property="og:image" content="vip-massage_chair.jpg" />
+    <meta property="og:url" content="https://auraherbs.ai/share-treatment.html" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="share-treatment.css" />
+</head>
+<body>
+    <section class="share-treatment-section">
+        <h1 class="section-title">Treatment Protocol Overview</h1>
+        <div class="image-grid">
+            <div class="card glass">
+                <img src="img_04.png" alt="Step 4" loading="lazy" />
+            </div>
+            <div class="card glass">
+                <img src="img_05.png" alt="Step 5" loading="lazy" />
+            </div>
+            <div class="card glass">
+                <img src="img_06.png" alt="Step 6" loading="lazy" />
+            </div>
+        </div>
+        <h2 class="testimonial-title">What Patients Say</h2>
+        <div class="testimonial-carousel">
+            <div class="testimonial-item active">
+                <img src="testimony.jpg" alt="Testimonial 1" loading="lazy" />
+                <p class="caption">"I felt the transformation within weeks!" – Alex</p>
+            </div>
+            <div class="testimonial-item">
+                <img src="testimony2.jpg" alt="Testimonial 2" loading="lazy" />
+                <p class="caption">"The protocol gave me my life back." – Maya</p>
+            </div>
+        </div>
+    </section>
+    <script src="share-treatment.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Update Dynamic Dates
+            const dateEls = document.querySelectorAll('.header-date, .current-date');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+            dateEls.forEach(el => el.innerHTML = '<i class="far fa-calendar-alt"></i> ' + dateStr);
+
+            // 2. Auth State Management
+            const userSession = JSON.parse(localStorage.getItem('kedi_user_session'));
+            const authLinks = document.querySelectorAll('a[href*="account.html"], a[href*="login"], a[href*="register"]');
+            
+            if (userSession) {
+                authLinks.forEach(link => {
+                    if (link.innerText.toLowerCase().includes('sign in') || link.innerText.toLowerCase().includes('register')) {
+                        link.innerHTML = '<i class="fas fa-user-circle"></i> ' + userSession.name.split(' ')[0];
+                        link.href = '#!';
+                        // Add logout listener
+                        link.title = 'Click to Logout';
+                        link.onclick = () => {
+                            if(confirm('Logout of clinical ecosystem?')) {
+                                localStorage.removeItem('kedi_user_session');
+                                window.location.reload();
+                            }
+                        };
+                    }
+                });
+            } else {
+                authLinks.forEach(link => {
+                    link.href = 'auth.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
